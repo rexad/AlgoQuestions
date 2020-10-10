@@ -1,5 +1,5 @@
 
-
+println("test")
 object SolutionBruteForce {
 
   def validPalindrome(s: String): Boolean = {
