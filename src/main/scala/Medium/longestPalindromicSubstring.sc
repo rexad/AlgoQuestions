@@ -14,27 +14,41 @@ Output: "bb"
 * */
 
 /*
-public String longestPalindrome(String s) {
-  if (s == null || s.length() < 1) return "";
-  int start = 0, end = 0;
-  for (int i = 0; i < s.length(); i++) {
-    int len1 = expandAroundCenter(s, i, i);
-    int len2 = expandAroundCenter(s, i, i + 1);
-    int len = Math.max(len1, len2);
-    if (len > end - start) {
-      start = i - (len - 1) / 2;
-      end = i + len / 2;
+
+ */
+object Solution {
+  def longestPalindrome(s: String): String = {
+    if(s.length == 1) return ""
+    var max = 0
+    var maxPal = ""
+    for(i <- 0 until  s.length) {
+      if(i <= (s.length - 2) && s(i) == s(i+1)) {
+        var lengthPal = explore(s, i-1, i+2)
+        println("#" + lengthPal)
+        println(i)
+        if(lengthPal  > max) {
+          max = lengthPal
+          maxPal = s.substring(i- ((lengthPal-2)/2), i + lengthPal/2 +1 )
+        }
+      }
+      if(i < (s.length - 1)) {
+        var lengthPal = explore(s, i-1, i+1)
+        if(lengthPal  > max) {
+          max = lengthPal
+          println(i)
+          println(lengthPal)
+          maxPal = s.substring(i - lengthPal/2, i + lengthPal/2 +1  )
+        }
+      }
     }
+    maxPal
   }
-  return s.substring(start, end + 1);
+
+  def explore(s:String, l: Int, r: Int): Int = {
+    println(l + "#" + r)
+    if(l >= 0 && r < s.length && s(l) == s(r)) explore(s, l-1, r+1)
+    else (r - l - 1)
+  }
 }
 
-private int expandAroundCenter(String s, int left, int right) {
-  int L = left, R = right;
-  while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
-    L--;
-    R++;
-  }
-  return R - L - 1;
-}
- */
+Solution.longestPalindrome("ccd")
